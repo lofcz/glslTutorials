@@ -1,4 +1,5 @@
 // By LoF, end of 2k16
+// Revisited 10/2k17: New ShaderToy standard
 
 float rand(vec2 co)
 {
@@ -9,7 +10,7 @@ float map(vec3 point)
 {
   vec3 q = fract(point) * 2.0 - 1.0;
     
-  return (length(q) - abs(sin(iGlobalTime) / 8.0));   
+  return (length(q) - abs(sin(iTime) / 8.0));   
 }
 
 float trace(vec3 origin, vec3 ray)
@@ -33,12 +34,12 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     uv.x   *= iResolution.x / iResolution.y;
     
     vec3 ray = normalize(vec3(uv, 1.0));
-    vec3 origin = vec3(cos(iGlobalTime) / 2.0, sin(iGlobalTime) / 2.0, iGlobalTime * 0.5);
+    vec3 origin = vec3(cos(iTime) / 2.0, sin(iTime) / 2.0, iTime * 0.5);
      
     float fc = trace(origin, ray);
     float fog = 10.0 / (1.0 + fc * fc * 0.9);
     
     vec3 f = vec3(fog);
     
-	fragColor = vec4(vec3(fog * sin(iGlobalTime), fog * cos(iGlobalTime), fog * rand(fragCoord)),1.0);
+	fragColor = vec4(vec3(fog * sin(iTime), fog * cos(iTime), fog * rand(fragCoord)),1.0);
 }
